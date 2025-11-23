@@ -1,0 +1,438 @@
+/* ========== base/reset ========== */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(206, 205, 205);
+  color: rgb(15, 14, 14);
+}
+
+/* ========== video (background) ========== */
+.video-container {
+  /* place video absolutely so it fills the .hero only (hero is positioned relative) */
+  position: absolute;
+  inset: 0;            /* top:0; right:0; bottom:0; left:0 */
+  z-index: 0; /* behind hero content */
+  overflow: hidden;
+  pointer-events: none; /* don't intercept clicks; controls will explicitly be interactive */
+}
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.7) saturate(0.95);
+  pointer-events: none; /* avoid the native video element intercepting pointer events */
+}
+
+/* video controls placed inside the hero */
+.video-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* optional overlay to improve contrast (defined once later) */
+
+/* ========== header / nav ========== */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.brand-and-search {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.origin {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: white;
+  margin: 0;
+}
+
+/* search */
+.search-container { display:flex; align-items:center; gap:8px; }
+.search-input {
+  padding: 8px 12px;
+  border-radius: 30px;
+  border: none;
+  min-width: 200px;
+}
+.search-btn {
+  padding: 8px 12px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+}
+
+/* nav links */
+.main-nav { display:flex; gap: 18px; align-items:center; }
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.nav-link:hover { background: rgba(12, 12, 12, 0.08); }
+.nav-link.active { background: rgba(255,255,255,0.14); }
+
+/* hamburger icon */
+/* Navbar container */
+/* Container for menu */
+.hamburger {
+  width: 35px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 20;
+}
+
+/* menu container - ensure dropdown is positioned relative to header brand */
+.menu-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 18px;
+  z-index: 1100; /* above hero/slider but below header backdrop if needed */
+}
+
+.menu-wrapper { display:flex; align-items:center; }
+
+/* Side panel (sliding menu) */
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0; /* right-side panel for a modern UX */
+  height: 100vh;
+  width: 320px;
+  max-width: 85vw;
+  background: linear-gradient(180deg, rgba(10,10,10,0.98), rgba(30,30,30,0.98));
+  color: white;
+  transform: translateX(100%); /* hidden by default (off-screen to the right) */
+  transition: transform 300ms ease, opacity 200ms ease;
+  box-shadow: -6px 0 24px rgba(0,0,0,0.45);
+  z-index: 2000;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0.98;
+}
+
+.side-panel.open {
+  transform: translateX(0);
+}
+
+.side-panel .close-panel {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.side-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.side-nav a:hover { background: rgba(255,255,255,0.06); }
+
+/* overlay behind panel */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 200ms ease;
+  z-index: 1900;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* cart drawer */
+.cart-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 360px;
+  max-width: 95vw;
+  background: white;
+  z-index: 2001;
+  transform: translateX(100%);
+  transition: transform 240ms ease;
+  padding: 18px;
+  overflow:auto;
+  color: #111;
+}
+.cart-drawer.open { transform: translateX(0); }
+.nav-cart { background: transparent; border: none; cursor: pointer; font-size: 18px; }
+
+.bar {
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 4px;
+}
+/* legacy dropdown removed (not used) */
+
+/*==========page1=========*/
+/*.slider-container {
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  position: relative;
+  overflow:auto;
+  border-radius: 0;
+  background-image: url("./image/asell.jpg");
+}*/
+
+.hero-slider {
+  width: 100%;
+  height: 800px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* The slide area */
+.slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* SLIDES (use your real paths) */
+.bg-0 {
+  background-image: url("./image/pap.jpg");
+}
+
+.bg-1 {
+  background-image: url("./image/asell.jpg");
+}
+
+.bg-2 {
+  background-image: url("./image/boy.webp");
+}
+
+/* If video is needed as background */
+.bg-3 {
+  background-image: url("./image/mainv.mp4");
+}
+
+/* BUTTONS */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.slider-btn.left {
+  left: 15px;
+}
+
+.slider-btn.right {
+  right: 15px;
+}
+
+
+
+
+/* ========== hero ========== */
+.hero {
+  width: 100%;
+  max-width: 1400px;
+  height: calc(100vh - 72px);
+  margin: 72px auto 40px; /* push below fixed header */
+  position: relative;
+  overflow: hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(rgba(7, 7, 7, 0.08), rgba(0,0,0,0.08));
+  color: rgb(8, 8, 8);
+  z-index: 10}
+
+/* Video fills hero */
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position:absolute; /* fill the hero only */
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Dark overlay to make text readable */
+.video-overlay {
+  position:absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+/* Text on top */
+.hero-content {
+  position:absolute;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: white;
+  text-align: center;
+}
+
+.hero-content h2 {
+  font-size: 2.5rem;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 10px black;
+}
+
+.shop-now {
+  background: white;
+  color: black;
+  padding: 12px 22px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.shop-now:hover {
+  background: black;
+  color: white;
+}
+
+.promo-banner { width:100%; background: linear-gradient(90deg,#111 0%, #333 100%); color: #fff; padding: 12px 0; margin-top: 20px; }
+.promo-inner { width:90%; max-width:1200px; margin:0 auto; text-align:center; font-weight:700; }
+
+.categories .category { cursor:pointer; text-decoration:none; display:flex; align-items:center; justify-content:center; }
+
+.testimonials { width:90%; max-width:900px; margin:36px auto; text-align:center; color:#222; }
+.testimonials blockquote { font-style: italic; color:#444; }
+
+
+/* ========== clarify ========== */
+.clarify { width: 80%; max-width:1200px; margin: 20px auto; color: #222; }
+.clarify h2 { margin: 6px 0; font-style: italic; }
+
+/* ========== categories ========== */
+.categories {
+  width: 80%;
+  max-width: 1200px;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  z-index: 10;
+}
+.category {
+  height: 160px;
+    border-radius: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:800;
+  text-transform:uppercase;
+  background-size:cover;
+  background-position:center;
+}
+
+/* Sample category images (adjust paths if needed) */
+.men { background-image: url("./image/man.jpg ")}
+.women { background-image: url("./image/girls.webp"); }
+.kids { background-image: url("./image/child.avif"); }
+.accessories { background-image: url("./image/suf.jpg"); }
+
+/* ========== featured products ========== */
+.products-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 32px auto 60px;
+  color: #111;
+}
+.section-header { display:flex; align-items:baseline; gap:14px; justify-content:space-between; margin-bottom:18px; }
+.section-header h2 { margin:0; }
+.products-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.product-card { background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.06); display:flex; flex-direction:column; }
+.product-img { width:100%; height:220px; background-size:cover; background-position:center; }
+.product-body { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
+.product-title { font-size:16px; margin:0; color:#222; }
+.product-meta { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.product-price { font-weight:800; color:#111; }
+.product-btn { background:#000; color:white; border:none; padding:8px 10px; border-radius:6px; cursor:pointer; }
+.product-btn:hover { opacity:0.9 }
+
+@media (max-width: 1000px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .product-img { height:180px; }
+}
+
+/* ========== footer/contact ========== */
+.site-footer { margin-top: 40px; padding: 40px 0; text-align:center; color:white; }
+
+/* ========== utility ========== */
+.fade-in { animation: fadeIn 1s ease forwards; opacity:0; transform: translateY(12px); }
+@keyframes fadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* small responsive tweaks */
+@media (max-width: 900px) {
+  .hero { height: 320px; margin-top: 100px; }
+  .categories { grid-template-columns: repeat(2, 1fr); }
+  .search-input { min-width: 120px; }
+}
